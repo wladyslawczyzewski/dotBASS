@@ -12,12 +12,13 @@ namespace dotBASS
 	/// <summary>
 	/// Opensource BASS.dll wrapper for .NET published under MS-PL license conditions.
 	/// For latest version visit http://github.com/coirius/dotBASS
+	/// For more detailed documentation visit http://un4seen.com/doc
 	/// </summary>
 	public class BASS
 	{
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		private static extern bool BASS_Init(int device, int freq, BASSInitFlags flags, IntPtr win, IntPtr clsid);
+		private static extern bool BASS_Init(int device, UInt32 freq, BASSInitFlags flags, IntPtr win, IntPtr clsid);
 
 		/// <summary>
 		/// Initializes an output device.
@@ -27,7 +28,7 @@ namespace dotBASS
 		/// <param name="flags">Combination of BASSInitFlags</param>
 		/// <param name="win">The application's main window; 0 = the current foregound window</param>
 		/// <returns>true if the device was successfully initialized, else false</returns>
-		public static bool BASS_Init(int device, int freq, BASSInitFlags flags, IntPtr win)
+		public static bool BASS_Init(int device, UInt32 freq, BASSInitFlags flags, IntPtr win)
 		{
 			return BASS_Init(device, freq, flags, win, IntPtr.Zero);
 		}
@@ -48,7 +49,7 @@ namespace dotBASS
 		public static extern BASSError BASS_ErrorGetCode();
 
 		[DllImport(@"bass.dll", EntryPoint = "BASS_GetVersion", CharSet = CharSet.Auto)]
-		private static extern int BASS_Version();
+		private static extern UInt32 BASS_Version();
 
 		/// <summary>
 		/// Retrieves the version of BASS
@@ -61,7 +62,7 @@ namespace dotBASS
 		}
 
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
-		private static extern int BASS_StreamCreateFile([MarshalAs(UnmanagedType.Bool)] bool mem, [MarshalAs(UnmanagedType.LPWStr), In] string file, long offset, long length, BASSFlag flags);
+		private static extern UInt32 BASS_StreamCreateFile([MarshalAs(UnmanagedType.Bool)] bool mem, [MarshalAs(UnmanagedType.LPWStr), In] string file, UInt64 offset, UInt64 length, BASSFlag flags);
 
 		/// <summary>
 		/// Creates a sample stream from file
@@ -71,7 +72,7 @@ namespace dotBASS
 		/// <param name="length">Data length; 0 = use all data up to the end of the file</param>
 		/// <param name="flags">Combination of BASSFlags</param>
 		/// <returns>Stream's handle if successful, else 0 is returned.</returns>
-		public static int BASS_StreamCreateFile(string file, long offset, long length, BASSFlag flags)
+		public static UInt32 BASS_StreamCreateFile(string file, UInt64 offset, UInt64 length, BASSFlag flags)
 		{
 			flags |= BASSFlag.BASS_UNICODE;
 			return BASS_StreamCreateFile(false, file, offset, length, flags);
@@ -84,7 +85,7 @@ namespace dotBASS
 		/// <returns>true if successful, else false is returned</returns>
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool BASS_StreamFree(int handle);
+		public static extern bool BASS_StreamFree(UInt32 handle);
 
 		/// <summary>
 		/// Starts or resumes playback of a stream
@@ -94,7 +95,7 @@ namespace dotBASS
 		/// <returns>true if successful, else false is returned</returns>
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool BASS_ChannelPlay(int handle, [MarshalAs(UnmanagedType.Bool)] bool restart);
+		public static extern bool BASS_ChannelPlay(UInt32 handle, [MarshalAs(UnmanagedType.Bool)] bool restart);
 
 		/// <summary>
 		/// Stops a stream playback
@@ -103,7 +104,7 @@ namespace dotBASS
 		/// <returns>true if successful, else false is returned</returns>
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool BASS_ChannelStop(int handle);
+		public static extern bool BASS_ChannelStop(UInt32 handle);
 
 		/// <summary>
 		/// Pauses a stream playbach
@@ -112,6 +113,44 @@ namespace dotBASS
 		/// <returns>true if successful, else false is returned</returns>
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool BASS_ChannelPause(int handle);
+		public static extern bool BASS_ChannelPause(UInt32 handle);
+
+		/// <summary>
+		/// Retrieves the playback position of a stream.
+		/// </summary>
+		/// <param name="handle">The stream handle</param>
+		/// <param name="mode">How to retrieve the posion</param>
+		/// <returns>If successful, the channel postion is returned, else -1 is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		public static extern UInt64 BASS_ChannelGetPosition(UInt32 handle, BASSPosMode mode);
+
+		/// <summary>
+		/// Sets the playback postion of a stream
+		/// </summary>
+		/// <param name="handle">The stream handle</param>
+		/// <param name="pos">The postion, in units determined by the mode</param>
+		/// <param name="mode">How to set the postion</param>
+		/// <returns>true if successful, else false is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BASS_ChannelSetPosition(UInt32 handle, UInt64 pos, BASSPosMode mode);
+
+		/// <summary>
+		/// Translates a byte position into time (seconds)
+		/// </summary>
+		/// <param name="handle">The stream handle</param>
+		/// <param name="pos">The position to translate</param>
+		/// <returns>If successful, then the translated length is returned, else a negative value is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		public static extern double BASS_ChannelBytes2Seconds(UInt32 handle, UInt64 pos);
+
+		/// <summary>
+		/// Translate a time (seconds) position into bytes
+		/// </summary>
+		/// <param name="handle">The stream handle</param>
+		/// <param name="pos">The position to translate</param>
+		/// <returns>If successful, then the translated length is returned, else -1 is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		public static extern UInt64 BASS_ChannelSeconds2Bytes(UInt32 handle, double pos);
 	}
 }

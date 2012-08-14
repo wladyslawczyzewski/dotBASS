@@ -36,6 +36,7 @@
     <Compile Include="BASSError.cs" />
     <Compile Include="BASSFlag.cs" />
     <Compile Include="BASSInitFlags.cs" />
+    <Compile Include="BASSPosMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
