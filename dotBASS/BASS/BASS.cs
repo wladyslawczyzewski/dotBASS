@@ -36,12 +36,28 @@ namespace dotBASS.BASS
 		}
 
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
-		private static extern int BASS_StreamCreateFile([MarshalAs(UnmanagedType.Bool)] bool mem,
-			[MarshalAs(UnmanagedType.LPStr), In] string file, long offset, long length, BASSFlag flags);
+		private static extern int BASS_StreamCreateFile([MarshalAs(UnmanagedType.Bool)] bool mem, [MarshalAs(UnmanagedType.LPWStr), In] string file, long offset, long length, BASSFlag flags);
 
-		public static int BASS_StreamCreateFile(string file, long offset, long length)
+		public static int BASS_StreamCreateFile(string file, long offset, long length, BASSFlag flags)
 		{
-			return BASS_StreamCreateFile(false, file, offset, 0, BASSFlag.BASS_DEFAULT | BASSFlag.BASS_UNICODE);
+			flags |= BASSFlag.BASS_UNICODE;
+			return BASS_StreamCreateFile(false, file, offset, length, flags);
 		}
+
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BASS_StreamFree(int handle);
+
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BASS_ChannelPlay(int handle, [MarshalAs(UnmanagedType.Bool)] bool restart);
+
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BASS_ChannelStop(int handle);
+
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BASS_ChannelPause(int handle);
 	}
 }
