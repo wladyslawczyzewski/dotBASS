@@ -1,5 +1,5 @@
 ﻿using System;
-using dotBASS.BASS;
+using dotBASS;
 
 namespace dotBASSExample
 {

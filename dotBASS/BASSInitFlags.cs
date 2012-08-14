@@ -1,6 +1,12 @@
-﻿using System;
+﻿/**
+ * dotBASS published under MS-PL license
+ * Copyright © Vladyslav Chyzhevskyi, 2012
+ * BASS.dll wrapper for .NET
+ */
 
-namespace dotBASS.BASS
+using System;
+
+namespace dotBASS
 {
 	[Flags]
 	public enum BASSInitFlags

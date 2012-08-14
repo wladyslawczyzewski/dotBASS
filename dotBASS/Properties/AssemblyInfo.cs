@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("dotBASS")]
-[assembly: AssemblyDescription("BASS.dll wrapper")]
+[assembly: AssemblyDescription("BASS.dll wrapper for .NET")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("dotBASS")]
