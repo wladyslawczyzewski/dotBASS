@@ -152,5 +152,21 @@ namespace dotBASS
 		/// <returns>If successful, then the translated length is returned, else -1 is returned</returns>
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		public static extern UInt64 BASS_ChannelSeconds2Bytes(UInt32 handle, double pos);
+
+		/// <summary>
+		/// Retrieves the current master volume level
+		/// </summary>
+		/// <returns>If successful, the volume level is returned, else -1 is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		public static extern float BASS_GetVolume();
+
+		/// <summary>
+		/// Sets the output master volume
+		/// </summary>
+		/// <param name="volume">The volume level; 0 - silent, 1 - max</param>
+		/// <returns>true if successful, else false is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BASS_SetVolume(float volume);
 	}
 }
