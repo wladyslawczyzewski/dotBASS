@@ -168,5 +168,12 @@ namespace dotBASS
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool BASS_SetVolume(float volume);
+
+		/// <summary>
+		/// Retrieves the current CPU usage of BASS
+		/// </summary>
+		/// <returns>The BASS CPU use as a percentage</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		public static extern float BASS_GetCPU();
 	}
 }
