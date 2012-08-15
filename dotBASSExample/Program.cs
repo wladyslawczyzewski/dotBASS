@@ -19,6 +19,8 @@ namespace dotBASSExample
 					BASS.BASS_SetVolume(vlevel);
 					BASS.BASS_ChannelSetPosition(stream, BASS.BASS_ChannelSeconds2Bytes(stream, pos), BASSPosMode.BASS_POS_BYTE);
 					BASS.BASS_ChannelPlay(stream, false);
+					BASS_TAG tags = BASS.BASS_ChannelGetTags(stream, BASSTagFlags.BASS_TAG_ID3);
+					Console.WriteLine("Artist: {0}\nTitle: {1}\nAlbum: {2}\nTrackNo: {3}\nGenre: {4}\nYear: {5}\nComment: {6}", tags.Artist, tags.Title, tags.Album, tags.TrackNo, tags.Genre, tags.Year, tags.Comment);
 					while (true)
 					{
 						TimeSpan t = TimeSpan.FromSeconds(BASS.BASS_ChannelBytes2Seconds(stream, BASS.BASS_ChannelGetPosition(stream, BASSPosMode.BASS_POS_BYTE)));

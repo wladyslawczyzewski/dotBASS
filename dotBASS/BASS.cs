@@ -230,5 +230,90 @@ namespace dotBASS
 			}
 			return new BASS_DEVICEINFO();
 		}
+
+		[DllImport(@"bass.dll", EntryPoint = "BASS_ChannelGetTags", CharSet = CharSet.Auto)]
+		private static extern IntPtr BASS_ChannelGetTagsP(UInt32 handle, BASSTagFlags flags);
+
+		/// <summary>
+		/// Retrieves tags/header from a channel
+		/// </summary>
+		/// <param name="handle">The channel handle</param>
+		/// <param name="flags">The tags/header wanted, on of BASSTagFlags</param>
+		/// <returns>If successful, requested tags are returned, else null is returned</returns>
+		public static BASS_TAG BASS_ChannelGetTags(UInt32 handle, BASSTagFlags flags)
+		{
+			BASS_TAG tags = null;
+			switch (flags)
+			{
+				case BASSTagFlags.BASS_TAG_ID3:
+					{
+						BASS_TAG_ID3 tmp = (BASS_TAG_ID3)Marshal.PtrToStructure(BASS_ChannelGetTagsP(handle, flags), typeof(BASS_TAG_ID3));
+						tags = new BASS_TAG();
+						if (tmp.comment[28] == (char)0)
+						{
+							// if 29 byte of comment is null ('\0') then 30 byte of comment string is track nomber
+							tags.TrackNo = tmp.comment[29];
+							tmp.comment[29] = (char)0;
+						}
+						tags.Album = new string(tmp.album).Replace("\0", "").Trim();
+						tags.Artist = new string(tmp.artist).Replace("\0", "").Trim();
+						tags.Comment = new string(tmp.comment).Replace("\0", "").Trim();
+						if (tmp.genre > 147)
+							tags.Genre = tags.BASS_TAG_GENRE[147];
+						else
+							tags.Genre = tags.BASS_TAG_GENRE[tmp.genre];
+						tags.Title = new string(tmp.title).Replace("\0", "").Trim();
+						tags.Year = new string(tmp.year).Replace("\0", "").Trim();
+						break;
+					}
+				case BASSTagFlags.BASS_TAG_ID3V2:
+					break;
+				case BASSTagFlags.BASS_TAG_OGG:
+					break;
+				case BASSTagFlags.BASS_TAG_HTTP:
+					break;
+				case BASSTagFlags.BASS_TAG_ICY:
+					break;
+				case BASSTagFlags.BASS_TAG_META:
+					break;
+				case BASSTagFlags.BASS_TAG_APE:
+					break;
+				case BASSTagFlags.BASS_TAG_MP4:
+					break;
+				case BASSTagFlags.BASS_TAG_VENDOR:
+					break;
+				case BASSTagFlags.BASS_TAG_LYRICS3:
+					break;
+				case BASSTagFlags.BASS_TAG_CA_CODEC:
+					break;
+				case BASSTagFlags.BASS_TAG_MF:
+					break;
+				case BASSTagFlags.BASS_TAG_WAVEFORMAT:
+					break;
+				case BASSTagFlags.BASS_TAG_RIFF_INFO:
+					break;
+				case BASSTagFlags.BASS_TAG_RIFF_BEXT:
+					break;
+				case BASSTagFlags.BASS_TAG_RIFF_CART:
+					break;
+				case BASSTagFlags.BASS_TAG_RIFF_DISP:
+					break;
+				case BASSTagFlags.BASS_TAG_APE_BINARY:
+					break;
+				case BASSTagFlags.BASS_TAG_MUSIC_NAME:
+					break;
+				case BASSTagFlags.BASS_TAG_MUSIC_MESSAGE:
+					break;
+				case BASSTagFlags.BASS_TAG_MUSIC_ORDERS:
+					break;
+				case BASSTagFlags.BASS_TAG_MUSIC_INST:
+					break;
+				case BASSTagFlags.BASS_TAG_MUSIC_SAMPLE:
+					break;
+				default:
+					break;
+			}
+			return tags;
+		}
 	}
 }
