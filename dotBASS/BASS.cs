@@ -175,5 +175,14 @@ namespace dotBASS
 		/// <returns>The BASS CPU use as a percentage</returns>
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		public static extern float BASS_GetCPU();
+
+		/// <summary>
+		/// Retrieves onformation on the device being used
+		/// </summary>
+		/// <param name="info">Reference to a structure to receive the information</param>
+		/// <returns>true is successful, else false is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BASS_GetInfo(ref BASS_INFO info);
 	}
 }

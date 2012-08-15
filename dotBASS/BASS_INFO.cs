@@ -1,0 +1,82 @@
+﻿using System;
+using System.Runtime.InteropServices;
+
+namespace dotBASS
+{
+	/// <summary>
+	/// Used with BASS_GetInfo() to retrieve information on the current device
+	/// </summary>
+	public struct BASS_INFO
+	{
+		/// <summary>
+		/// The device's capabilities
+		/// </summary>
+		public UInt32 flags;
+
+		/// <summary>
+		/// The device's total amount of hardware memory
+		/// </summary>
+		public UInt32 hwsize;
+
+		/// <summary>
+		/// The device's amount of free hardware memory
+		/// </summary>
+		public UInt32 hwfree;
+
+		/// <summary>
+		/// The number of free sample slots in the hardware
+		/// </summary>
+		public UInt32 freesam;
+
+		/// <summary>
+		/// The number of free 3D sample slots in the hardware
+		/// </summary>
+		public UInt32 free3d;
+
+		/// <summary>
+		/// The minimum sample rate supported by hardware
+		/// </summary>
+		public UInt32 minrate;
+
+		/// <summary>
+		/// The maximum sample rate supported by hardwware
+		/// </summary>
+		public UInt32 maxrate;
+
+		/// <summary>
+		/// The device supports EAX and has it enabled?
+		/// </summary>
+		[MarshalAs(UnmanagedType.Bool)]
+		public bool eax;
+
+		/// <summary>
+		/// The minimum buffer length
+		/// </summary>
+		public UInt32 minbuf;
+
+		/// <summary>
+		/// DirectSound version
+		/// </summary>
+		public UInt32 dsver;
+
+		/// <summary>
+		/// The average delay for playback of stream
+		/// </summary>
+		public UInt32 latency;
+
+		/// <summary>
+		/// The flags parameter of the BASS_init() call
+		/// </summary>
+		public UInt32 initflags;
+
+		/// <summary>
+		/// The number of available speakers; 2 means that there is no support foe speaker assignment
+		/// </summary>
+		public UInt32 speakers;
+
+		/// <summary>
+		/// The divice's current output sample rate
+		/// </summary>
+		public UInt32 freq;
+	}
+}
