@@ -62,7 +62,7 @@ namespace dotBASS
 		}
 
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
-		private static extern UInt32 BASS_StreamCreateFile([MarshalAs(UnmanagedType.Bool)] bool mem, [MarshalAs(UnmanagedType.LPWStr), In] string file, UInt64 offset, UInt64 length, BASSFlag flags);
+		private static extern UInt32 BASS_StreamCreateFile([MarshalAs(UnmanagedType.Bool)] bool mem, [MarshalAs(UnmanagedType.LPWStr)] string file, UInt64 offset, UInt64 length, BASSFlag flags);
 
 		/// <summary>
 		/// Creates a sample stream from file
@@ -184,5 +184,51 @@ namespace dotBASS
 		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool BASS_GetInfo(ref BASS_INFO info);
+
+		/// <summary>
+		/// Retrieves the device setting of the current thread
+		/// </summary>
+		/// <returns>If succesful, the device number is returned, else -1 is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		public static extern UInt32 BASS_GetDevice();
+
+		/// <summary>
+		/// Sets the device to use for subsquent calls in the current thread
+		/// </summary>
+		/// <param name="device">The device to use: 0 = no sound, 1 = first real output device</param>
+		/// <returns>true if succesful, else false is returned</returns>
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BASS_SetDevice(UInt32 device);
+
+		[DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool BASS_GetDeviceInfo(UInt32 device, ref BASS_DEVICEINFOP info);
+
+		private struct BASS_DEVICEINFOP
+		{
+			public IntPtr name;
+			public IntPtr driver;
+			public UInt32 flags;
+		}
+
+		/// <summary>
+		/// Retrieves information on an output device
+		/// </summary>
+		/// <param name="device">The device to get the information; 0 = first</param>
+		/// <returns>If successful, device information structure is returned, else blank structure is returned</returns>
+		public static BASS_DEVICEINFO BASS_GetDeviceInfo(UInt32 device)
+		{
+			BASS_DEVICEINFOP a = new BASS_DEVICEINFOP();
+			if (BASS_GetDeviceInfo(device, ref a))
+			{
+				BASS_DEVICEINFO info = new BASS_DEVICEINFO();
+				info.name = Marshal.PtrToStringAnsi(a.name);
+				info.driver = Marshal.PtrToStringAnsi(a.driver);
+				info.flags = a.flags;
+				return info;
+			}
+			return new BASS_DEVICEINFO();
+		}
 	}
 }

@@ -37,6 +37,7 @@
     <Compile Include="BASSFlag.cs" />
     <Compile Include="BASSInitFlags.cs" />
     <Compile Include="BASSPosMode.cs" />
+    <Compile Include="BASS_DEVICEINFO.cs" />
     <Compile Include="BASS_INFO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
