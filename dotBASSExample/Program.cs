@@ -1,5 +1,12 @@
-﻿using System;
+﻿/**
+ * dotBASS published under MS-PL license
+ * Copyright © Vladyslav Chyzhevskyi, 2012
+ * BASS.dll wrapper for .NET example usage
+ */
+
+using System;
 using dotBASS;
+using dotBASS.Tags;
 
 namespace dotBASSExample
 {
@@ -19,7 +26,7 @@ namespace dotBASSExample
 					BASS.BASS_SetVolume(vlevel);
 					BASS.BASS_ChannelSetPosition(stream, BASS.BASS_ChannelSeconds2Bytes(stream, pos), BASSPosMode.BASS_POS_BYTE);
 					BASS.BASS_ChannelPlay(stream, false);
-					BASS_TAG tags = BASS.BASS_ChannelGetTags(stream, BASSTagFlags.BASS_TAG_ID3);
+					BASS_TAG tags = BASS_TAG.BASS_ChannelGetTags(stream, BASSTagFlags.BASS_TAG_ID3);
 					Console.WriteLine("Artist: {0}\nTitle: {1}\nAlbum: {2}\nTrackNo: {3}\nGenre: {4}\nYear: {5}\nComment: {6}", tags.Artist, tags.Title, tags.Album, tags.TrackNo, tags.Genre, tags.Year, tags.Comment);
 					while (true)
 					{

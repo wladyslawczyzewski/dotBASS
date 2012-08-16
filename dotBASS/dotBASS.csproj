@@ -37,11 +37,11 @@
     <Compile Include="BASSFlag.cs" />
     <Compile Include="BASSInitFlags.cs" />
     <Compile Include="BASSPosMode.cs" />
-    <Compile Include="BASSTagFlags.cs" />
+    <Compile Include="Tags\BASSTagFlags.cs" />
     <Compile Include="BASS_DEVICEINFO.cs" />
     <Compile Include="BASS_INFO.cs" />
-    <Compile Include="BASS_TAG.cs" />
-    <Compile Include="BASS_TAG_ID3.cs" />
+    <Compile Include="Tags\BASS_TAG.cs" />
+    <Compile Include="Tags\TAG_ID3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

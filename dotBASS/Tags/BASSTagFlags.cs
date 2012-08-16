@@ -1,4 +1,11 @@
-﻿using System;
+﻿/**
+ * dotBASS published under MS-PL license
+ * Copyright © Vladyslav Chyzhevskyi, 2012
+ * BASS.dll wrapper for .NET
+ */
+
+using System;
+
 namespace dotBASS
 {
 	[Flags]

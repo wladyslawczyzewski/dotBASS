@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿/**
+ * dotBASS published under MS-PL license
+ * Copyright © Vladyslav Chyzhevskyi, 2012
+ * BASS.dll wrapper for .NET
+ */
+
+using System;
 using System.Runtime.InteropServices;
 
-namespace dotBASS
+namespace dotBASS.Tags
 {
-	internal struct BASS_TAG_ID3
+	internal struct TAG_ID3
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
 		public char[] id;
