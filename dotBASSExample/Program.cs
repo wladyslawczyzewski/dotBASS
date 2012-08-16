@@ -16,7 +16,7 @@ namespace dotBASSExample
 		{
 			if (BASS.BASS_Init(-1, 44100, BASSInitFlags.BASS_DEVICE_DEFAULTS, IntPtr.Zero))
 			{
-				UInt32 stream = BASS.BASS_StreamCreateFile(@"D:\Projects\dotBASS\dotBASSExample\bin\Debug\Test.mp3", 0, 0, BASSFlag.BASS_DEFAULT);
+				UInt32 stream = BASS.BASS_StreamCreateFile(@"D:\alarm.mp3", 0, 0, BASSFlag.BASS_DEFAULT);
 				if (stream != 0)
 				{
 					Console.WriteLine("Set playback position (in seconds):");
@@ -26,7 +26,7 @@ namespace dotBASSExample
 					BASS.BASS_SetVolume(vlevel);
 					BASS.BASS_ChannelSetPosition(stream, BASS.BASS_ChannelSeconds2Bytes(stream, pos), BASSPosMode.BASS_POS_BYTE);
 					BASS.BASS_ChannelPlay(stream, false);
-					BASS_TAG tags = BASS_TAG.BASS_ChannelGetTags(stream, BASSTagFlags.BASS_TAG_ID3);
+					BASS_TAG tags = BASS_TAG.BASS_ChannelGetTags(stream, BASSTagFlags.BASS_TAG_ID3V2);
 					Console.WriteLine("Artist: {0}\nTitle: {1}\nAlbum: {2}\nTrackNo: {3}\nGenre: {4}\nYear: {5}\nComment: {6}", tags.Artist, tags.Title, tags.Album, tags.TrackNo, tags.Genre, tags.Year, tags.Comment);
 					while (true)
 					{

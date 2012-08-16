@@ -9,7 +9,8 @@ using System.Runtime.InteropServices;
 
 namespace dotBASS.Tags
 {
-	internal struct TAG_ID3
+	[StructLayout(LayoutKind.Sequential)]
+	internal class TAG_ID3
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
 		public char[] id;
