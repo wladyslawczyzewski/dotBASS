@@ -31,7 +31,7 @@ namespace dotBASSExample
 					while (true)
 					{
 						TimeSpan t = TimeSpan.FromSeconds(BASS.BASS_ChannelBytes2Seconds(stream, BASS.BASS_ChannelGetPosition(stream, BASSPosMode.BASS_POS_BYTE)));
-						Console.Write(string.Format("\rPlayback postion: {0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms; Master volume: {4}; CPU usage: {5}", t.Hours, t.Minutes, t.Seconds, t.Milliseconds, BASS.BASS_GetVolume(), BASS.BASS_GetCPU()));
+						Console.Write(string.Format("\rPlayback postion: {0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms; CPU usage: {4}", t.Hours, t.Minutes, t.Seconds, t.Milliseconds, BASS.BASS_GetCPU()));
 					}
 					Console.WriteLine("Press any key to exit...");
 					Console.ReadKey(false);

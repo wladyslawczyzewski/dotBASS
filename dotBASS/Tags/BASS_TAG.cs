@@ -27,6 +27,17 @@ namespace dotBASS.Tags
 		public string Genre { get; set; }
 		public int TrackNo { get; set; }
 
+		public BASS_TAG()
+		{
+			Title = string.Empty;
+			Artist = string.Empty;
+			Album = string.Empty;
+			Year = string.Empty;
+			Comment = string.Empty;
+			Genre = BASS_TAG_GENRE[147];
+			TrackNo = 0;
+		}
+
 		[DllImport(@"bass.dll", EntryPoint = "BASS_ChannelGetTags", CharSet = CharSet.Auto)]
 		private static extern IntPtr BASS_ChannelGetTagsP(UInt32 handle, BASSTagFlags flags);
 
@@ -44,6 +55,8 @@ namespace dotBASS.Tags
 				case BASSTagFlags.BASS_TAG_ID3:
 					{
 						TAG_ID3 tmp = (TAG_ID3)Marshal.PtrToStructure(BASS_ChannelGetTagsP(handle, flags), typeof(TAG_ID3));
+						if (tmp == null)
+							return new BASS_TAG();
 						tags = new BASS_TAG();
 						if (tmp.comment[28] == (char)0)
 						{
@@ -65,6 +78,11 @@ namespace dotBASS.Tags
 				case BASSTagFlags.BASS_TAG_ID3V2:
 					{
 						IntPtr ptr = BASS_ChannelGetTagsP(handle, flags);
+						if (ptr == IntPtr.Zero)
+						{
+							tags = BASS_ChannelGetTags(handle, BASSTagFlags.BASS_TAG_ID3);
+							break;
+						}
 						if (Marshal.PtrToStringAnsi(ptr, 3) == "ID3")
 						{
 							byte[] version = new byte[2]
