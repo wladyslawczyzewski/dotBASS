@@ -230,5 +230,8 @@ namespace dotBASS
 			}
 			return new BASS_DEVICEINFO();
 		}
+
+        [DllImport(@"bass.dll", CharSet = CharSet.Auto)]
+	    public static extern UInt64 BASS_ChannelGetLength(UInt32 handle, BASSPosMode mode);
 	}
 }
